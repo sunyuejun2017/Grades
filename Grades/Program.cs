@@ -56,7 +56,7 @@ namespace Grades
         private static void WriteBytes(int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
-            WrieBytes(bytes);
+            WrieByteArray(bytes);
         }
 
         
@@ -64,11 +64,11 @@ namespace Grades
         private static void WriteBytes(float value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
-            WrieBytes(bytes);
+            WrieByteArray(bytes);
         }
 
 
-        private static void WrieBytes(byte[] bytes)
+        private static void WrieByteArray(byte[] bytes)
         {
             foreach (byte b in bytes)
             {
