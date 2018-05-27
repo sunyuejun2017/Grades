@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Speech.Synthesis;
+using System.IO;
 
 namespace Grades
 {
@@ -31,11 +32,67 @@ namespace Grades
             //PassByValueAndRef();
 
             GradeBook book = new GradeBook("Jack");
-            book.AddGrade(91f);
-            book.AddGrade(89.1f);
-            book.AddGrade(75f);
+
+           
+
+            
+            try
+            {
+
+                using (FileStream fs = File.Open("grades.txt", FileMode.Open))
+                using (StreamReader sr = new StreamReader(fs))
+                {
+
+                    string line = sr.ReadLine();
+
+                    while (line != null)
+                    {
+                        float grade = float.Parse(line);
+                        book.AddGrade(grade);
+                        line = sr.ReadLine();
+                    }
+
+                }
+                //string[] lines = File.ReadAllLines("grades.txt");
+
+                //foreach (string line in lines)
+                //{
+                //    float grade = float.Parse(line);
+                //    book.AddGrade(grade);
+                //}
+            }
+            catch (FileNotFoundException ex)
+            {
+
+                Console.WriteLine("File not found");
+                return;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Console.WriteLine("No access");
+                return;
+            }
+            //finally
+            //{
+            //    if (sr != null)
+            //    {
+            //        sr.Close();
+            //    }
+
+            //    if (fs != null)
+            //    {
+            //        fs.Close();
+            //    }
+
+            //}
 
 
+            //book.AddGrade(91f);
+            //book.AddGrade(89.1f);
+            //book.AddGrade(75f);
+
+
+            book.WriteGrades(Console.Out);
 
             //Console.WriteLine(book.Name);
 
