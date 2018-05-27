@@ -23,7 +23,7 @@ namespace Grades
 
         static void Main(string[] args)
         {
-           // SpeechSynthesizer synth = new SpeechSynthesizer();
+            // SpeechSynthesizer synth = new SpeechSynthesizer();
             //synth.Speak("Hello, World");
 
 
@@ -31,11 +31,8 @@ namespace Grades
             //Immutable();
             //PassByValueAndRef();
 
-            GradeBook book = new GradeBook("Jack");
+            IGradeTracker book = CreateGradebook();
 
-           
-
-            
             try
             {
 
@@ -92,6 +89,16 @@ namespace Grades
             //book.AddGrade(75f);
 
 
+            foreach (float grade in book)
+            {
+                Console.WriteLine(grade);
+            }
+
+
+
+            book.DoSomething();
+
+
             book.WriteGrades(Console.Out);
 
             //Console.WriteLine(book.Name);
@@ -123,12 +130,17 @@ namespace Grades
             //WriteBytes(stats.AverageGrade);
 
 
-            //Console.WriteLine(stats.AverageGrade);
-            //Console.WriteLine(stats.LowestGrade);
-            //Console.WriteLine(stats.HighestGrade);
+            Console.WriteLine(stats.AverageGrade);
+            Console.WriteLine(stats.LowestGrade);
+            Console.WriteLine(stats.HighestGrade);
 
             Console.ReadKey();
 
+        }
+
+        private static IGradeTracker CreateGradebook()
+        {
+            return new ThrowAwayGradeBook("Jack");
         }
 
         private static void OnNameChanged2(object sender, NameChangedEventArgs args)

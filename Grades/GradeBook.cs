@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
 namespace Grades
 {
-    public class GradeBook
+    public class GradeBook : GradeTracker 
     {
         public GradeBook(string name = null)
         {
@@ -12,9 +13,19 @@ namespace Grades
             grades = new List<float>();
         }
 
-         
 
-        public void AddGrade(float grade)
+        public override IEnumerator GetEnumerator()
+        {
+            return grades.GetEnumerator();
+        }
+
+        public override void DoSomething()
+        {
+            Console.WriteLine("GradeBook Do something");
+        }
+
+
+        public override void AddGrade(float grade)
         {
             if (grade >= 0 && grade < 100)
             {
@@ -22,7 +33,7 @@ namespace Grades
             }
         }
 
-        public GradeStatistics ComputeStatistics()
+        public override GradeStatistics ComputeStatistics()
         {
             GradeStatistics stats = new GradeStatistics();
             
@@ -38,7 +49,7 @@ namespace Grades
             return stats;
         }
 
-        public void WriteGrades(TextWriter textWriter)
+        public override void WriteGrades(TextWriter textWriter)
         {
             textWriter.WriteLine("Grades:");
 
@@ -78,7 +89,7 @@ namespace Grades
         }
 
      
-        public NamedChangeDelegate NameChanged;
-        private List<float> grades;
+        public event NamedChangeDelegate NameChanged;
+        protected List<float> grades;
     }
 }
