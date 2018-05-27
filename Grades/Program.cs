@@ -30,26 +30,58 @@ namespace Grades
             //Immutable();
             //PassByValueAndRef();
 
-            GradeBook book = new GradeBook();
+            GradeBook book = new GradeBook("Jack");
             book.AddGrade(91f);
             book.AddGrade(89.1f);
             book.AddGrade(75f);
 
 
+
+            //Console.WriteLine(book.Name);
+
+            // Method 1 for delegate
+            //book.NameChanged = new NamedChangeDelegate(OnNameChanged);
+
+            // Method 2 for delegate
+            //book.NameChanged += OnNameChanged;
+
+            //book.NameChanged += OnNameChanged;
+            //book.NameChanged += OnNameChanged2;
+            //book.Name = "Dick";
+
+            //Console.WriteLine(book.Name);
+
+            //WriteNames("hello", "Jack", "bob", "Dick");
+
             GradeStatistics stats = book.ComputeStatistics();
 
 
-            int number = 20;
+            Console.WriteLine(stats.LetterGrade);
 
-            WriteBytes(number);
-            WriteBytes(stats.AverageGrade);
+            Console.WriteLine(stats.Description);
+
+            //int number = 20;
+
+            //WriteBytes(number);
+            //WriteBytes(stats.AverageGrade);
 
 
             //Console.WriteLine(stats.AverageGrade);
             //Console.WriteLine(stats.LowestGrade);
             //Console.WriteLine(stats.HighestGrade);
 
-            Console.ReadLine();
+            Console.ReadKey();
+
+        }
+
+        private static void OnNameChanged2(object sender, NameChangedEventArgs args)
+        {
+            Console.WriteLine("*********");
+        }
+
+        private static void OnNameChanged(object sender, NameChangedEventArgs args)
+        {
+            Console.WriteLine("Name changed from {0} to {1}", args.OldValue, args.NewValue);
 
         }
 
@@ -126,5 +158,16 @@ namespace Grades
             IncrementNumber(ref x1);
             Console.WriteLine(x1);
         }
+
+
+        private static void WriteNames(params string[] names)
+        {
+            foreach (string name in names)
+            {
+                Console.WriteLine(name);
+
+            }
+        }
+          
     }
 }
